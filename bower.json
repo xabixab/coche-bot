@@ -1,0 +1,22 @@
+{
+  "name": "coche-bot",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "xabixab <xabixab@gmail.com>",
+    "oierbravo"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/oierbravo/coche-bot",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1"
+  }
+}
