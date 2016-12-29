@@ -1,27 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>MAP</title>
-	<!-- <script type="text/javascript" src="/public/p5.js/lib/p5.js"></script> -->
 
-	<style>
-	
-	#info, #info_pos, #info_rot, #info_mouse{
-		color:#FFFFFF;
-	}
-	
-	</style>
+<head>
+    <title>MAP</title>
+    <!-- <script type="text/javascript" src="/public/p5.js/lib/p5.js"></script> -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <style>
+        #info,
+        #info_pos,
+        #info_rot,
+        #info_mouse {
+            /*color:#FFFFFF; */
+        }
+        
+        body {
+            background-color: #000000
+        }
+    </style>
 </head>
-<body bgcolor="#000000">
-	<div align="center">
-		<canvas height="900px" width="900px" id="canvas"> </canvas> <br/>
-		<div id="info">Position: <a href="#" id="info_pos">[0,0]</a> Rotation: <a href="#" id="info_rot">[0]</a> <br/>
-		Pointer: <a id="info_mouse">[0,0]</a></div>
-	</div>
+
+<body>
+    <div class="container" align="center">
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"><a href="#" class="btn btn-default" id="control_rect">Hacer recta</a> | <a href="#" class="btn btn-default" id="control_arc">Hacer arco</a>
+                <br />
+            </div>
+            <div class="col-md-4">
+                <input id="ex1" data-slider-id='scaleslider' type="text" data-slider-min="0.20" data-slider-max="5" data-slider-step="0.05" data-slider-value="1.2" />
+                <br />
+                <br />
+                <a href="#" id="control_view" class="btn btn-primary">Centrar Vista</a></div>
+            <div class="col-md-4">
+                <div id="info">Position: <a href="#" id="info_pos">[0,0]</a> Rotation: <a href="#" id="info_rot">[0]</a>
+                    <br/> Pointer: <a id="info_mouse">[0,0]</a></div>
+                <br />
+            </div>
+        </div>
+        <br />
+        <canvas height="700px" width="700px" id="canvas"> </canvas>
+        <br/>
+    </div>
 
 </body>
-	<script type="text/javascript" src="/public/socket.io-client/dist/socket.io.js"></script>
-	<script type="text/javascript" src="/public/jquery/dist/jquery.min.js" /></script>
-	<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="/bower_components/socket.io-client/dist/socket.io.js"></script>
+<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" /></script>
+<script type="text/javascript" src="/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="map.js"></script>
+
 </html>
-	
