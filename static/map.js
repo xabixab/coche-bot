@@ -1,23 +1,24 @@
-var rscale = 250.0; // 1 tile = 20cm // 200mm
-var scale = 1.2;
+var rscale = 200.0; // 1 tile = 20cm // 200mm
+var scale = 1;
 var offset = {x:0.0, y:0.0};
+var origin = {x:0.0, y:10.0};
+var tileSize = 40;
 $(function(){
 	canvas = $("#canvas");
 	c = document.getElementById("canvas");
 	ctx = c.getContext("2d");
 	w = canvas.width();
 	h = canvas.height();
-
+	cx = w/2;
+	cy = h/2;
+	ctx.translate(cx, cy);
+	
 	scaleSlider = $("#ex1").slider({})
 	scaleSlider.on('slide', draw);
 	
 	socket = io('http://localhost:9000');
 	socket.on('connect', function(){
-		canvas.mousemove(function(event){
-			var mouse = getMousePos(c, event);
-			var mouse_pos = fromCanvasToPos(mouse.x, mouse.y);
-			$("#info_mouse").html(JSON.stringify([Math.round(mouse_pos[0]), Math.round(mouse_pos[1])]));
-		});
+		console.log("Connected!");
 	});
 
 	socket.on('position', function (data) {
@@ -33,21 +34,30 @@ $(function(){
 	});
 	canvas.click(changeView);
 	$("#control_view").click(function(){
-		offset.x = 0.0;
-		offset.y = 0.0;
+		origin.x = 0.0;
+		origin.y = 0.0;
+		scale = 1;
 		draw();
+	});
+	canvas.mousemove(function(event){
+		mouse = getMousePos(c, event);
+		mouse.x = 0 - (cx - mouse.x);
+		mouse.y = 0 - (cy - mouse.y);
+		var mouseInUnits = fromCanvasToUnits(mouse.x, mouse.y);
+		$("#info_pos").html("X:" + round(mouseInUnits.x.toString(),0) + "mm Y:" + round(mouseInUnits.y.toString(),0) + "mm");
 	});
 	
 });
 
 function draw(){
-	ctx.clearRect(0, 0, w, h);
+	ctx.clearRect(-cx, -cy, cx*2, cy*2);
+
 	scale = scaleSlider.val();
-	displayScale = scale * 25;
-	mmToCanvasTiles = 1 / rscale;
+	displayScale = scale * tileSize;
+	// mmToCanvasTiles = 1 / rscale; // OBSOLETE?
 	mmToCanvasCoords = 1 / rscale * displayScale;
 	
-	drawGrid(offset.x, offset.y, scale);
+	drawGrid(scale);
 	drawCar(pos.x, pos.y, pos.rot);
 }
 
@@ -60,67 +70,77 @@ function getMousePos(canvas, evt) {
 	return mouse
 }
 
-function drawGrid(xoffset, yoffset, scale){
-
-	xoffset = xoffset * mmToCanvasCoords;
-	yoffset = yoffset * mmToCanvasCoords;
-	lxoffset = (xoffset % displayScale) / 2
-	lyoffset = (yoffset % displayScale) / 2
-	y0 = (h/2 - (h/2 % displayScale)) + yoffset - lyoffset;
-	x0 = (w/2 - (w/2 % displayScale)) + xoffset - lxoffset;
-
+function drawGrid(scale){
 	ctx.clearRect(0, 0, w, h);
 	ctx.beginPath();
 	
-	for (var x=lxoffset; x<=w; x=x+displayScale){
-		ctx.moveTo(x,0);
-		ctx.lineTo(x,h);
-	}
-
-	for (var y=lyoffset; y<=h; y=y+displayScale){
-		ctx.moveTo(0,y);
-		ctx.lineTo(w,y);
+	for (var x=origin.x; x<=cx * 4; x=x+displayScale){
+		ctx.moveTo(x, -cy);
+		ctx.lineTo(x,  cy);
+		ctx.moveTo((0 - (x - origin.x)) + origin.x, -cy);
+		ctx.lineTo((0 - (x - origin.x)) + origin.x,  cy);
 	}
 	
+	for (var y=origin.y; y<=cy * 4; y=y+displayScale){
+		ctx.moveTo(-cx, y);
+		ctx.lineTo( cx, y);
+		ctx.moveTo(-cx, (0 - (y - origin.y)) + origin.y);
+		ctx.lineTo( cx, (0 - (y - origin.y)) + origin.y);
+	}
+
 	ctx.strokeStyle = "#f00";
 	ctx.stroke();
 	
 	ctx.beginPath();
-	ctx.moveTo(0, y0);
-	ctx.lineTo(w, y0);
+	ctx.moveTo(-cx, origin.y);
+	ctx.lineTo(cx, origin.y);
 	
-	ctx.moveTo(x0, 0);
-	ctx.lineTo(x0, h);
+	ctx.moveTo(origin.x, -cy);
+	ctx.lineTo(origin.x, cy);
 	
 	ctx.strokeStyle = "#0f0";
 	ctx.stroke();
-	
+
 	// write labels
 	ctx.beginPath();
-	ctx.font="15px Arial";
+	ctx.font="12px Arial";
 	var lblratio = 2;
 	
-	for(var y=h / displayScale / 2  % lblratio * displayScale + lyoffset; y<=h; y = y + displayScale * lblratio){
-		var lbl = round(((y - y0) * (Math.pow(mmToCanvasCoords, -1)) / 1000), 5).toString() + "M";
-		ctx.fillText(lbl,x0 + 2, y - 2);
+	for(var y=origin.y; y<=cy*4; y = y + displayScale * lblratio){
+		var xu = fromCanvasToUnits(0,y).y;
+		var lbl = round(xu/1000,5).toString() + "M";
+		ctx.fillText(lbl,origin.x + 2, y - 2);
+		if(y!=origin.y){
+			ctx.fillText("-" + lbl, origin.x + 2, (0 - (y - origin.y)) + origin.y - 2);
+		}
 		ctx.fillStyle = "#FF0000";
 	}
 	
-	for(var x=w / displayScale / 2  % lblratio * displayScale + lxoffset; x<=w; x = x + displayScale * lblratio){
-		var lbl = round(((x - x0) * (Math.pow(mmToCanvasCoords, -1)) / 1000), 5).toString() + "M";
-		ctx.fillText(lbl, x + 2, y0 - 2);
+	for(var x=origin.x; x<=cy*4; x = x + displayScale * lblratio){
+		var yu = fromCanvasToUnits(x, 0).x;
+		var lbl = round(yu/1000,5).toString() + "M";
+		ctx.fillText(lbl, x + 2, origin.y - 4);
+		if(x!=origin.x){
+			ctx.fillText("-" + lbl, (0 - (x - origin.x)) + origin.x + 2, origin.y - 2);
+		}
 		ctx.fillStyle = "#FF0000";
 	}
 }
 
+function fromCanvasToUnits(x, y){
+	var px = (x - origin.x) * (Math.pow(mmToCanvasCoords, -1));
+	var py = (y - origin.y) * (Math.pow(mmToCanvasCoords, -1));
+	return {x: px, y: py}
+}
+
 function drawCar(x, y, rot){
 	var carDimensions = [300, 350];
-	cnvDim = {
+	var cnvDim = {
 		x: carDimensions[0] * mmToCanvasCoords,
 		y: carDimensions[1] * mmToCanvasCoords
 	}
-	x = x0 + x * mmToCanvasCoords;
-	y = y0 + y * mmToCanvasCoords;
+	x = origin.x + x * mmToCanvasCoords;
+	y = origin.y + y * mmToCanvasCoords;
 	
 	ctx.beginPath();
 	ctx.save();
@@ -131,7 +151,7 @@ function drawCar(x, y, rot){
 	ctx.stroke(); 
 	ctx.restore();
 }
-
+/*
 function fromCanvasToPos(x, y){
 	var posx = (x - x0) * (Math.pow(mmToCanvasCoords, -1));
 	var posy = (y - y0) * (Math.pow(mmToCanvasCoords, -1));
@@ -140,11 +160,17 @@ function fromCanvasToPos(x, y){
 
 function changeView(){
 	var mouseRealPos = fromCanvasToPos(mouse.x, mouse.y);
-	offset.x = x0 - mouseRealPos[0];
-	offset.y = y0 - mouseRealPos[1];
+	offset.x = mouseRealPos[0];
+	offset.y = mouseRealPos[1];
 	draw();
 }
+*/
 
+function changeView(){
+	origin.x = mouse.x;
+	origin.y = mouse.y;
+	draw();
+}
 function round(a, zeros){
 	return Math.round(a * Math.pow(10, zeros)) / Math.pow(10, zeros);
 }
