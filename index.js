@@ -10,7 +10,7 @@ var io = require('socket.io')(server);
 var pos = {
 	x: 0.0,
 	y: 0.0,
-	rot: 0.0
+	rot: 45.0
 }
 
 var radius = 50; // 50mm
