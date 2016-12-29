@@ -7,7 +7,11 @@ var server = app.listen(9000, function () {
 var io = require('socket.io')(server); 
 
 // X, Y, Rotation
-var pos = [0.0, 0.0, 0.0];
+var pos = {
+	x: 0.0,
+	y: 0.0,
+	rot: 45.0
+}
 
 var radius = 50; // 50mm
 var ws = 400; // Wheel separation in mm
@@ -17,7 +21,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/mvrect', function(req, res){
-
+	pos.x = pos.x + 100;
+	
 });
 
 app.get('/mvarc', function(req, res){
