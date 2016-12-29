@@ -1,17 +1,40 @@
-	var express = require('express')
-	var app = express()
+var O = require('observed')
+var express = require('express');  
+var app = express();  
+var server = app.listen(9000, function () {
+  console.log('Position:' + pos.toString());
+});
+var io = require('socket.io')(server); 
 
-	app.get('/', function (req, res) {
-	  res.redirect("/public");
-	})
+// X, Y, Rotation
+var pos = [0.0, 0.0, 0.0];
 
-	app.post('/mv', function(req, res){
+var radius = 50; // 50mm
+var ws = 400; // Wheel separation in mm
 
-	});
+app.get('/', function (req, res) {
+	res.redirect("/public");
+});
 
-	app.use('/public', express.static('static'));	
-	app.use('/public', express.static('bower-components'));
+app.get('/mvrect', function(req, res){
 
-	app.listen(9000, function () {
-	  console.log('Example app listening on port 9000!')
-	})
+});
+
+app.get('/mvarc', function(req, res){
+
+});
+
+app.use('/public', express.static('static'));	
+app.use('/public', express.static('bower_components'));
+
+
+
+io.on('connection', function (socket) {
+	console.log("connection!");
+	socket.emit('position', pos);
+});
+
+Object.observe(pos, function () {
+  io.emit('position', pos);
+  console.log("Position changed!" + JSON.stringify(pos));
+})
