@@ -16,9 +16,11 @@ var pos = {
 var radius = 50; // 50mm
 var ws = 300; // Wheel separation in mm
 
-app.get('/', function (req, res) {
-	res.redirect("/public");
-});
+app.use(express.static(__dirname + '/static'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+/*app.get('/', function (req, res) 
+});*/
 
 app.get('/mvrect', function(req, res){
 	pos.x = pos.x + 100;
@@ -28,10 +30,6 @@ app.get('/mvrect', function(req, res){
 app.get('/mvarc', function(req, res){
 
 });
-
-app.use('/public', express.static('static'));	
-app.use('/public', express.static('bower_components'));
-
 
 
 io.on('connection', function (socket) {
