@@ -1,4 +1,4 @@
-var rscale = 200.0; // 1 tile = 20cm // 200mm
+var rscale = 250.0; // 1 tile = 20cm // 200mm
 var scale = 1.5;
 
 $(function(){
@@ -83,6 +83,23 @@ function drawGrid(xoffset, yoffset, scale){
 	
 	ctx.strokeStyle = "#0f0";
 	ctx.stroke();
+	
+	// write labels
+	ctx.beginPath();
+	ctx.font="15px Arial";
+	var lblratio = 2;
+	
+	for(var y=h / displayScale / 2  % lblratio * displayScale; y<=h; y = y + displayScale * lblratio){
+		var lbl = ((y - y0) * (Math.pow(mmToCanvasCoords, -1)) / 1000).toString() + "M";
+		ctx.fillText(lbl,x0 + 2, y - 2);
+		ctx.fillStyle = "#FF0000";
+	}
+	
+	for(var x=w / displayScale / 2  % lblratio * displayScale; x<=w; x = x + displayScale * lblratio){
+		var lbl = ((x - x0) * (Math.pow(mmToCanvasCoords, -1)) / 1000).toString() + "M";
+		ctx.fillText(lbl, x + 2, y0 - 2);
+		ctx.fillStyle = "#FF0000";
+	}
 }
 
 function drawCar(x, y, rot){
