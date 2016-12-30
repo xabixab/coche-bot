@@ -1,12 +1,9 @@
 var O = require('observed')
-<<<<<<< HEAD
 var express = require('express');
 var app = express();
-=======
-var express = require('express');  
+var express = require('express');
 var app = express();
 var Sentsoreak = require('./sentsoreak');
->>>>>>> e7d23932c63298f1f45f3ab90af17473e0e6339e
 var server = app.listen(9000, function () {
 console.log('Position:' + pos.toString());
 });
