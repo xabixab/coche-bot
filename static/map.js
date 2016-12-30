@@ -1,5 +1,5 @@
-var origin = {x:0.0, y:10.0};
-
+var origin = {x:0.0, y:0.0};
+var operationInProgress = false;
 $(function(){
 	canvas = $("#canvas");
 	c = document.getElementById("canvas");
@@ -9,7 +9,7 @@ $(function(){
 	cx = w/2;
 	cy = h/2;
 	ctx.translate(cx, cy);
-	
+
 	scaleSlider = $("#ex1").slider({})
 	scaleSlider.on('slide', draw);
 
@@ -20,9 +20,9 @@ $(function(){
 		mouse.x = 0 - (cx - mouse.x);
 		mouse.y = 0 - (cy - mouse.y);
 		var mouseInUnits = fromCanvasToUnits(mouse.x, mouse.y);
-		$("#info_pos").html("X:" + round(mouseInUnits.x.toString(),0) + "mm Y:" + round(mouseInUnits.y.toString(),0) + "mm");
+		$("#info_mouse").html("X:" + round(mouseInUnits.x.toString(),0) + "mm Y:" + round(mouseInUnits.y.toString(),0) + "mm");
 	});
-	
+
 });
 
 function getMousePos(canvas, evt) {
@@ -40,10 +40,20 @@ function fromCanvasToUnits(x, y){
 	return {x: px, y: py}
 }
 
+function fromUnitsToCanvas(x, y){
+	var px = mmToCanvasCoords * x + origin.x;
+	var py = mmToCanvasCoords * y + origin.y;
+	return {x: px, y:py}
+}
+
 function changeView(){
 	origin.x = mouse.x;
 	origin.y = mouse.y;
 	draw();
+}
+
+function tan(n){
+	return Math.tan(n * Math.PI/180);
 }
 
 function centerView(){
