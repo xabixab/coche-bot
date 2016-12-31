@@ -1,5 +1,5 @@
 var origin = {x:0.0, y:0.0};
-var operationInProgress = false;
+var operations = {}
 $(function(){
 	canvas = $("#canvas");
 	c = document.getElementById("canvas");
@@ -13,7 +13,7 @@ $(function(){
 	scaleSlider = $("#ex1").slider({})
 	scaleSlider.on('slide', draw);
 
-	canvas.click(changeView);
+	canvas.click(triggerClick);
 	$("#control_view").click(centerView);
 	canvas.mousemove(function(event){
 		mouse = getMousePos(c, event);
@@ -25,6 +25,16 @@ $(function(){
 
 });
 
+function triggerClick(){
+	if(!(operations.inProgress === true)){
+		changeView();
+	} else {
+		if(operations.rect === true){
+			rectClick(mouse);
+		}
+	}
+}
+
 function getMousePos(canvas, evt) {
 	var rect = canvas.getBoundingClientRect();
 	mouse = {
@@ -34,26 +44,10 @@ function getMousePos(canvas, evt) {
 	return mouse
 }
 
-function fromCanvasToUnits(x, y){
-	var px = (x - origin.x) * (Math.pow(mmToCanvasCoords, -1));
-	var py = (y - origin.y) * (Math.pow(mmToCanvasCoords, -1));
-	return {x: px, y: py}
-}
-
-function fromUnitsToCanvas(x, y){
-	var px = mmToCanvasCoords * x + origin.x;
-	var py = mmToCanvasCoords * y + origin.y;
-	return {x: px, y:py}
-}
-
 function changeView(){
 	origin.x = mouse.x;
 	origin.y = mouse.y;
 	draw();
-}
-
-function tan(n){
-	return Math.tan(n * Math.PI/180);
 }
 
 function centerView(){
@@ -62,6 +56,19 @@ function centerView(){
 	scale = 1;
 	draw();
 }
-function round(a, zeros){
-	return Math.round(a * Math.pow(10, zeros)) / Math.pow(10, zeros);
+
+function beginOperation(type){
+	$("#tools").hide();
+	$("#info-"+type).show();
+	$("#tools-"+type).show();
+	operations[type] = true;
+	operations.inProgress = true;
+}
+
+function endOperation(type){
+	$("#tools-"+type).hide();
+	$("#info-"+type).hide();
+	$("#tools").show();
+	operations[type] = false;
+	operations.inProgress = false;
 }

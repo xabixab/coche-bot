@@ -77,7 +77,10 @@ function drawCar(x, y, rot){
 	}
 	x = origin.x + x * mmToCanvasCoords;
 	y = origin.y + y * mmToCanvasCoords;
-
+	canvasCarPos = {
+		x: x,
+		y: y
+	}
 	ctx.beginPath();
 	ctx.save();
 	ctx.translate(x, y);
@@ -86,4 +89,26 @@ function drawCar(x, y, rot){
 	ctx.strokeRect(0 - cnvDim.x / 2, 0 - cnvDim.y / 2, cnvDim.x, cnvDim.y);
 	ctx.stroke();
 	ctx.restore();
+
+	// Draw Car Head
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	carMouth = {};
+	carTail = {};
+	carMouth.x = x + displayScale;
+	carTail.x = x - displayScale;
+	if(rot >= 180){
+		carMouth.x = x - displayScale;
+		carTail.x = x + displayScale;
+	} else {
+		carMouth.x = x + displayScale;
+		carTail.x = x - displayScale;
+	}
+
+	carMouth.y = tan(rot)*(carMouth.x - x) + y;
+	carTail.y = tan(rot)*(carTail.x - x) + y;
+	
+	ctx.lineTo(carMouth.x, carMouth.y);
+	ctx.strokeStyle = "#FFF";
+	ctx.stroke();
 }

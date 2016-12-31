@@ -11,9 +11,9 @@ var io = require('socket.io')(server);
 
 // X, Y, Rotation
 var pos = {
-	x: 100.0,
-	y: 120.0,
-	rot: 20.0
+	x: 0.0,
+	y: 0.0,
+	rot: 315.0
 }
 
 var radius = 50; // 50mm

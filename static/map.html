@@ -13,7 +13,7 @@
         #info_mouse {
             /*color:#FFFFFF; */
         }
-        
+
         body {
             background-color: #000000
         }
@@ -25,8 +25,20 @@
         <br />
 
         <div class="row">
-            <div class="col-md-4"><a href="#" class="btn btn-default" id="control_rect">Hacer recta</a> | <a href="#" class="btn btn-default" id="control_arc">Hacer arco</a>
-                <br />
+            <div class="col-md-4">
+              <div id="tools">
+                <a href="#" class="btn btn-default" id="control-rect">Hacer recta</a> |
+                <a href="#" class="btn btn-default" id="control-arc">Hacer arco</a>
+              </div>
+              <div id="tools-rect">
+                <a href="#" class="btn btn-danger"  id="rect-abort">Ezeztatu</a> |
+                <a href="#" class="btn btn-success" id="rect-make" disabled="disabled">Egin</a> <br /> <br/>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="rect-vel" value="500"/>
+                  <div class="input-group-addon">mm/s</div>
+                </div>
+              </div>
+
             </div>
             <div class="col-md-4">
                 <input id="ex1" data-slider-id='scaleslider' type="text" data-slider-min="0.20" data-slider-max="4" data-slider-step="0.05" data-slider-value="1" />
@@ -37,6 +49,7 @@
                 <div id="info">Position: <a href="#" id="info_pos">[0,0]</a> Rotation: <a href="#" id="info_rot">[0]</a>
                     <br/> Pointer: <a id="info_mouse">[0,0]</a></div>
                 <br />
+                <div id="info-rect"></div>
             </div>
         </div>
         <br />
@@ -49,6 +62,7 @@
 <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js" /></script>
 <script type="text/javascript" src="/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 <script type="text/javascript" src="map_websockets.js"></script>
+<script type="text/javascript" src="map_maths.js"></script>
 <script type="text/javascript" src="map_drawing.js"></script>
 <script type="text/javascript" src="map_rect.js"></script>
 <script type="text/javascript" src="map_arc.js"></script>
