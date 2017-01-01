@@ -1,0 +1,11 @@
+{
+  "initial_pos":{
+    "x":100,
+    "y":200,
+    "rot":20
+  },
+  "car_weights":{
+    "wradius":50,
+    "wseparation":300
+  }
+}
