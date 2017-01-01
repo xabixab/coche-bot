@@ -1,12 +1,11 @@
+var fs = require("fs");
+var config =  JSON.parse(fs.readFileSync("config.json"));
 var observed = require('observed')
 var express = require('express');
 var app = express();
 var Sentsoreak = require('./sentsoreak');
-var server = app.listen(9000);
+var server = app.listen(config.webport);
 var io = require('socket.io')(server);
-var fs = require("fs");
-
-var config =  JSON.parse(fs.readFileSync("config.json"));
 
 var pos = config.initial_pos;
 
@@ -19,7 +18,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 io.on('connection', function (socket) {
 	console.log("connection!");
 	socket.emit('position', pos);
-	
+
 	io.on('mvrect', function(data){
 		console.log("mvrect: " + JSON.stringify(data));
 	})

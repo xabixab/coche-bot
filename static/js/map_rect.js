@@ -120,6 +120,7 @@ function rectMake(){
     velocity: rectOperation.data.realVel
   }
   socket.emit("mvrect", finalParams);
+  console.log("mvrect sended with params:"+JSON.stringify(finalParams));
   rectOperation = null;
   endOperation("rect");
   draw();
