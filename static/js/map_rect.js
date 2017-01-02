@@ -89,7 +89,7 @@ function rectUpdateVel(){
     return false;
   }
 
-  rectOperation.data.realVel = $("#rect-vel").val();
+  rectOperation.data.realVel = parseInt($("#rect-vel").val());
   rectOperation.data.realTime = Math.abs(rectOperation.data.realDistance / rectOperation.data.realVel);
   var lbl1 = "Ezarritako helmuga: x:" + round(rectOperation.data.realEndpoint.y,0).toString() + "mm y:" + round(rectOperation.data.realEndpoint.y,0).toString() + "mm";
   var lbl2 = "Ibilitako distantzia: " + round(rectOperation.data.realDistance,0).toString() + "mm @ " + rectOperation.data.realVel.toString() + "mm/s = " + round(rectOperation.data.realTime,2).toString() + "s"

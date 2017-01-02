@@ -16,12 +16,12 @@ port.on('open', function() {
 	      		return console.log('Error on write: ', err.message);
 	    	}
   		});
-    
+
   	    }
     });
 
 
-  
+
     /*if(ready){
   port.write('ABEFEF', function(err) {
     if (err) {
@@ -37,7 +37,9 @@ port.on('open', function() {
     //console.log('message written');
   });*/
 
-  
-
-
 });
+
+hardwareMove(ad, bd, time){
+  console.log("Moving... "+ ad.toString() + ", " + bd.toString() + " @ " + time.toString())
+  return false;
+}
