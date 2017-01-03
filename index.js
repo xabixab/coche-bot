@@ -32,23 +32,19 @@ Object.observe(pos, function () {
   console.log("New Pos:" + JSON.stringify(pos));
 });
 
-if(!config.pure_mode){
-	console.log("Loading sensors...")
-	var Sentsoreak = require(__dirname + '/sentsoreak');
-	var sens = new Sentsoreak(); //arduino pins: 7,8
-	var sens1,sens2;
 
-	sens.on('sens:ready',function(data){
-		console.log("Sentsoreak prest!");
-	});
-	sens.on('sens:change',function(data){
-		sens1 = data.sens1;
-		sens2 = data.sens2;
-	});
-	app.get('/sens',function(req,res){
-		res.json({sens1:sens1,sens2:sens2});
-	});
+console.log("Loading sensors...")
+var Sentsoreak = require(__dirname + '/sentsoreak');
+var sens = new Sentsoreak(); //arduino pins: 7,8
+var sens1,sens2;
 
-} else {
-	console.log("Pure Mode Enabled. No Sensors.");
-}
+sens.on('sens:ready',function(data){
+	console.log("Sentsoreak prest!");
+});
+sens.on('sens:change',function(data){
+	sens1 = data.sens1;
+	sens2 = data.sens2;
+});
+app.get('/sens',function(req,res){
+	res.json({sens1:sens1,sens2:sens2});
+});

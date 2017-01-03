@@ -1,3 +1,6 @@
+var toRadians = Math.PI / 180;
+var toAngles = Math.pow(Math.PI / 180, -1);
+
 function round(a, zeros){
 	return Math.round(a * Math.pow(10, zeros)) / Math.pow(10, zeros);
 }

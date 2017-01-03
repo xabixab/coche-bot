@@ -6,55 +6,72 @@
     <!-- <script type="text/javascript" src="/public/p5.js/lib/p5.js"></script> -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
-    <style>
-        #info,
-        #info_pos,
-        #info_rot,
-        #info_mouse {
-            /*color:#FFFFFF; */
-        }
-
-        body {
-            background-color: #000000
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
 </head>
 
-<body>
-    <div class="container" align="center">
+<body bgcolor="#000000">
+    <div class="container" id="container" align="center">
         <br />
-
         <div class="row">
-            <div class="col-md-4">
-              <div id="tools">
-                <a href="#" class="btn btn-default" id="control-rect">Hacer recta</a> |
-                <a href="#" class="btn btn-default" id="control-arc">Hacer arco</a>
-              </div>
-              <div id="tools-rect">
-                <a href="#" class="btn btn-danger"  id="rect-abort">Ezeztatu</a> |
-                <a href="#" class="btn btn-success" id="rect-make" disabled="disabled">Egin</a> <br /> <br/>
+          <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6" align="center">
+                    <a href="#" id="control_view" class="btn btn-primary">Centrar Vista</a>
+                    <br />
+                    <br />
+                    <input id="ex1" data-slider-id='scaleslider' type="text" data-slider-min="0.20" data-slider-max="4" data-slider-step="0.05" data-slider-value="1" />
+                </div>
+
+                <div class="col-md-6">
+                    <div id="info">Position: <a href="#" id="info_pos">[0,0]</a> Rotation: <a href="#" id="info_rot">[0]</a>
+                        <br/> Pointer: <a id="info_mouse">[0,0]</a></div>
+                    <br />
+                    <div id="info-rect"></div>
+                </div>
+            </div>
+            <br />
+            <canvas height="650px" width="700px" id="canvas"> </canvas>
+          </div>
+          <div class="col-md-4">
+            <div id="tools">
+              <a href="#" class="btn btn-default" id="control-rect">Hacer recta</a> |
+              <a href="#" class="btn btn-default" id="control-arc">Hacer arco</a>
+            </div>
+            <div id="tools-operation">
+              <a href="#" class="btn btn-danger"  id="control-abort">Cancel</a> |
+              <a href="#" class="btn btn-success" id="control-make" disabled="disabled">Make</a> <br /> <br/>
+            </div>
+            <div id="tools-rect" align="left">
+              <h3>Make Rect</h3>
+              <hr />
+              <p>
                 <div class="input-group">
+                  <div class="input-group-addon">Velocity</div>
                   <input type="text" class="form-control" id="rect-vel" value="500"/>
                   <div class="input-group-addon">mm/s</div>
                 </div>
-              </div>
-
+              </p>
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Distance</div>
+                  <input type="text" class="form-control" id="rect-distance" value="200"/>
+                  <div class="input-group-addon">mm</div>
+                </div>
+              </p>
+              <p>
+                <p>
+                  <div class="input-group">
+                    <div class="input-group-addon">Final X:</div>
+                    <input type="text" class="form-control" id="rect-finalx" value="200" disabled/>
+                    <div class="input-group-addon">Final Y:</div>
+                    <input type="text" class="form-control" id="rect-finaly" value="200" disabled/>
+                  </div>
+                </p>
+              </p>
             </div>
-            <div class="col-md-4">
-                <input id="ex1" data-slider-id='scaleslider' type="text" data-slider-min="0.20" data-slider-max="4" data-slider-step="0.05" data-slider-value="1" />
-                <br />
-                <br />
-                <a href="#" id="control_view" class="btn btn-primary">Centrar Vista</a></div>
-            <div class="col-md-4">
-                <div id="info">Position: <a href="#" id="info_pos">[0,0]</a> Rotation: <a href="#" id="info_rot">[0]</a>
-                    <br/> Pointer: <a id="info_mouse">[0,0]</a></div>
-                <br />
-                <div id="info-rect"></div>
-            </div>
+          </div>
         </div>
-        <br />
-        <canvas height="700px" width="850px" id="canvas"> </canvas>
-        <br/>
+
     </div>
 
 </body>

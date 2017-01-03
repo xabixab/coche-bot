@@ -1,0 +1,20 @@
+#info,
+#info_pos,
+#info_rot,
+#info_mouse {
+    /*color:#FFFFFF; */
+}
+
+#canvas {
+    background-color: #000000;
+
+}
+
+#container {
+  margin:20px, 20px;
+  background-color: #FFFFFF;
+}
+
+#body {
+  background: #000000;
+}

@@ -17,17 +17,17 @@ function drawGrid(scale){
 	ctx.beginPath();
 
 	for (var x=origin.x; x<=cx * 4; x=x+displayScale){
-		ctx.moveTo(x, -cy);
-		ctx.lineTo(x,  cy);
-		ctx.moveTo((0 - (x - origin.x)) + origin.x, -cy);
-		ctx.lineTo((0 - (x - origin.x)) + origin.x,  cy);
+		ctx.moveTo(x, -cy * 2);
+		ctx.lineTo(x,  cy * 2);
+		ctx.moveTo((0 - (x - origin.x)) + origin.x, -cy * 2);
+		ctx.lineTo((0 - (x - origin.x)) + origin.x,  cy * 2);
 	}
 
 	for (var y=origin.y; y<=cy * 4; y=y+displayScale){
-		ctx.moveTo(-cx, y);
-		ctx.lineTo( cx, y);
-		ctx.moveTo(-cx, (0 - (y - origin.y)) + origin.y);
-		ctx.lineTo( cx, (0 - (y - origin.y)) + origin.y);
+		ctx.moveTo(-cx * 2, y);
+		ctx.lineTo( cx * 2, y);
+		ctx.moveTo(-cx * 2, (0 - (y - origin.y)) + origin.y);
+		ctx.lineTo( cx * 2, (0 - (y - origin.y)) + origin.y);
 	}
 
 	ctx.strokeStyle = "#f00";
@@ -107,7 +107,7 @@ function drawCar(x, y, rot){
 
 	carMouth.y = tan(rot)*(carMouth.x - x) + y;
 	carTail.y = tan(rot)*(carTail.x - x) + y;
-	
+
 	ctx.lineTo(carMouth.x, carMouth.y);
 	ctx.strokeStyle = "#FFF";
 	ctx.stroke();

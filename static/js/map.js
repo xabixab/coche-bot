@@ -15,6 +15,7 @@ $(function(){
 
 	canvas.click(triggerClick);
 	$("#control_view").click(centerView);
+	$("#tools-operation").hide();
 	canvas.mousemove(function(event){
 		mouse = getMousePos(c, event);
 		mouse.x = 0 - (cx - mouse.x);
@@ -67,8 +68,33 @@ function beginOperation(type){
 
 function endOperation(type){
 	$("#tools-"+type).hide();
-	$("#info-"+type).hide();
 	$("#tools").show();
+	$("#tools-operation");
 	operations[type] = false;
 	operations.inProgress = false;
+	disableMakeOperation();
+}
+
+function makeTrigger(){
+	if(operations.rect === true){
+		makeRect();
+	} else if (operations.arc === true){
+		makeArc();
+	}
+}
+
+function abortTrigger(){
+	if(operations.rect === true){
+		abortRect();
+	} else if(operations.arc === true){
+		abortArc();
+	}
+}
+
+function enableMakeBtn(){
+	$("#control-make").removeAttr("disabled");
+}
+
+function disableMakeBtn(){
+	$("#control-make").attr("disabled", "disabled");
 }
