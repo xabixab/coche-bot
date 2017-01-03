@@ -1,0 +1,13 @@
+{
+  "initial_pos":{
+    "x":0,
+    "y":0,
+    "rot":0
+  },
+  "car_weights":{
+    "wradius":50,
+    "wseparation":300
+  },
+  "webport":9000,
+  "pure_mode": false
+}
