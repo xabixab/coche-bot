@@ -94,19 +94,11 @@ function drawCar(x, y, rot){
 	ctx.beginPath();
 	ctx.moveTo(x, y);
 	carMouth = {};
-	carTail = {};
-	carMouth.x = x + displayScale;
-	carTail.x = x - displayScale;
-	if(rot >= 180){
-		carMouth.x = x - displayScale;
-		carTail.x = x + displayScale;
-	} else {
-		carMouth.x = x + displayScale;
-		carTail.x = x - displayScale;
-	}
 
-	carMouth.y = tan(rot)*(carMouth.x - x) + y;
-	carTail.y = tan(rot)*(carTail.x - x) + y;
+	var carMouth = {
+		x:cnvDim.x/2 * Math.cos(pos.rot * Math.PI/180) + canvasCarPos.x,
+		y:cnvDim.x/2 * Math.sin(pos.rot * Math.PI/180) + canvasCarPos.y
+	}
 
 	ctx.lineTo(carMouth.x, carMouth.y);
 	ctx.strokeStyle = "#FFF";

@@ -27,12 +27,13 @@ $(function(){
 });
 
 function triggerClick(){
-	if(!(operations.inProgress === true)){
-		changeView();
-	} else {
+	if(operations.inProgress === true){
 		if(operations.rect === true){
-			rectClick(mouse);
+			rectUpdate();
 		}
+	}
+	if(!(operations.viewfixed === true)){
+		changeView();
 	}
 }
 
@@ -51,6 +52,10 @@ function changeView(){
 	draw();
 }
 
+function changeViewToCar(){
+	//origin.x = cn
+}
+
 function centerView(){
 	origin.x = 0.0;
 	origin.y = 0.0;
@@ -64,6 +69,7 @@ function beginOperation(type){
 	$("#tools-"+type).show();
 	operations[type] = true;
 	operations.inProgress = true;
+	$("#tools-operation").show();
 }
 
 function endOperation(type){
@@ -73,6 +79,7 @@ function endOperation(type){
 	operations[type] = false;
 	operations.inProgress = false;
 	disableMakeOperation();
+	$("#tools-operation").hide();
 }
 
 function makeTrigger(){
@@ -89,6 +96,7 @@ function abortTrigger(){
 	} else if(operations.arc === true){
 		abortArc();
 	}
+	$("#tools-operation").hide();
 }
 
 function enableMakeBtn(){
