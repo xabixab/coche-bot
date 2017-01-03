@@ -29,7 +29,7 @@ Object.observe(pos, function () {
   console.log("New Pos:" + JSON.stringify(pos));
 });
 
-var sens = new Sentsoreak(); //arduino pins: 7,8
+var sens = new Sentsoreak({testMode:true}); //arduino pins: 7,8
 var sens1,sens2;
 
 sens.on('sens:ready',function(data){
