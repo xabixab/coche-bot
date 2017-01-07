@@ -1,8 +1,8 @@
 $(function(){
   $("#control-rect").click(initRect);
   $("#tools-rect").hide();
-  $("#rect-abort").click(rectAbort);
-  $("#rect-make").click(rectMake);
+  $("#control-abort").click(rectAbort);
+  $("#control-make").click(rectMake);
   $("#info-rect").hide();
   $("#rect-distance").change(rectUpdate);
 });
@@ -20,7 +20,9 @@ function initRect(){
 
 function rectUpdate(){
   draw();
-  rectOperation.params.distance = $("#rect-distance").val();
+  rectOperation.params.distance = parseInt($("#rect-distance").val());
+  rectOperation.params.velocity = parseInt($("#rect-velocity").val());
+  rectOperation.params.time = rectOperation.params.distance / rectOperation.params.velocity;
   rectOperation.params.canvasDistance = rectOperation.params.distance * mmToCanvasCoords;
   ctx.beginPath();
   ctx.moveTo(canvasCarPos.x, canvasCarPos.y);
@@ -54,8 +56,8 @@ function rectAbort(){
 
 function rectMake(){
   var finalParams = {
-    distance: rectOperation.data.realDistance,
-    velocity: rectOperation.data.realVel
+    distance: rectOperation.params.distance,
+    velocity: rectOperation.params.velocity
   }
   socket.emit("mvrect", finalParams);
   console.log("mvrect sended with params:"+JSON.stringify(finalParams));
