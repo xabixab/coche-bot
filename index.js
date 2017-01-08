@@ -20,6 +20,15 @@ io.on('connection', function (socket) {
 
 	socket.on('mvrect', function(params){
 		console.log(params);
+		var nx = car.getPos().x;
+		var ny = car.getPos().y;
+		var nr = car.getPos().rot;
+		var newpos = {
+			x: nx,
+			y: ny,
+			rot: nr
+		}
+		car.setPos(newpos)
 	});
 });
 
