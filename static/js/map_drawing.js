@@ -50,7 +50,7 @@ function drawGrid(scale){
 
 	for(var y=origin.y; y<=cy*4; y = y + displayScale * lblratio){
 		var xu = fromCanvasToUnits(0,y).y;
-		var lbl = round(xu/1000,5).toString() + "M";
+		var lbl = round(xu/1000,5).toString() + "m";
 		ctx.fillText(lbl,origin.x + 2, y - 2);
 		if(y!=origin.y){
 			ctx.fillText("-" + lbl, origin.x + 2, (0 - (y - origin.y)) + origin.y - 2);
@@ -60,7 +60,7 @@ function drawGrid(scale){
 
 	for(var x=origin.x; x<=cy*4; x = x + displayScale * lblratio){
 		var yu = fromCanvasToUnits(x, 0).x;
-		var lbl = round(yu/1000,5).toString() + "M";
+		var lbl = round(yu/1000,5).toString() + "m";
 		ctx.fillText(lbl, x + 2, origin.y - 4);
 		if(x!=origin.x){
 			ctx.fillText("-" + lbl, (0 - (x - origin.x)) + origin.x + 2, origin.y - 2);
