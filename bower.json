@@ -7,7 +7,7 @@
     "oierbravo"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/oierbravo/coche-bot",
+  "homepage": "https://github.com/xabixab/coche-bot",
   "ignore": [
     "**/.*",
     "node_modules",

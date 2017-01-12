@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oierbravo/coche-bot.git"
+    "url": "git+https://github.com/xabixab/coche-bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/oierbravo/coche-bot/issues"
+    "url": "https://github.com/xabixab/coche-bot/issues"
   },
-  "homepage": "https://github.com/oierbravo/coche-bot#readme",
+  "homepage": "https://github.com/xabixab/coche-bot#readme",
   "dependencies": {
     "express": "^4.14.0",
     "johnny-five": "^0.10.6",
