@@ -3,7 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 
 function Car(params) {
   this._params = params;
-  this.position = params.initial_pos;
+  this.position = this._params.initial_pos;
 }
 
 Car.prototype.getPos = function () {
