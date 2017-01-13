@@ -1,12 +1,12 @@
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
-
+/*
 function Car(params) {
   this._params = params;
   this.position = this._params.initial_pos;
 }
 
-Car.prototype.getPos = function () {
+Car.prototype.getPos = function() {
   return this.position;
 };
 
@@ -24,18 +24,18 @@ inherits(Car, EventEmitter);
 
 module.exports = Car;
 
-/*
-class Car {
+*/
+
+class Car extends EventEmitter {
   constructor(params) {
-    this._params = params;
-    this.position = params.initial_pos;
+    super();
+    this.params = params;
+    this.position = this.params.initial_pos;
   }
-
-  getPos = function () {
-    return this.position;
+  getPos() {
+  return this.position;
   };
-
-  setPos = function(pos) {
+  setPos(pos) {
     if(this.position !== pos){
       this.position = pos;
       this.emit('positionChange');
@@ -44,9 +44,5 @@ class Car {
       return false;
     }
   }
-  inherits(Car, EventEmitter);
-
 }
-
 module.exports = Car;
-*/

@@ -33,7 +33,7 @@ io.on('connection', function (socket) {
 });
 
 car.on("positionChange", function(){
-	io.emit("position", car.getPosition());
+	io.emit("position", car.getPos());
 })
 
 console.log("Loading sensors...")
