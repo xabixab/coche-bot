@@ -1,30 +1,11 @@
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
-/*
-function Car(params) {
-  this._params = params;
-  this.position = this._params.initial_pos;
-}
+var sleep = require('sleep');
 
-Car.prototype.getPos = function() {
-  return this.position;
-};
+'use strict';
+let wrap = require('async-class').wrap;
 
-Car.prototype.setPos = function(pos) {
-  if(this.position !== pos){
-    this.position = pos;
-    this.emit('positionChange');
-    return true;
-  } else {
-    return false;
-  }
-}
-
-inherits(Car, EventEmitter);
-
-module.exports = Car;
-
-*/
+var toRadians = Math.PI /   180;
 
 class Car extends EventEmitter {
   constructor(params) {
@@ -32,9 +13,11 @@ class Car extends EventEmitter {
     this.params = params;
     this.position = this.params.initial_pos;
   }
+
   getPos() {
-  return this.position;
+    return this.position;
   };
+
   setPos(pos) {
     if(this.position !== pos){
       this.position = pos;
@@ -44,5 +27,20 @@ class Car extends EventEmitter {
       return false;
     }
   }
+
+  *makeRect(distance, vel){
+    var that = this;
+    var unitVel = vel * this.params.time_unit;
+    var unitDistance = unitVel * that.params.time_unit;
+
+    for (var i = 0; i != distance; i = i + unitDistance) {
+      that.setPos({
+        x: that.getPos().x + unitDistance * Math.sin((90 - that.getPos().rot) * toRadians),
+        y: that.getPos().y + unitDistance * Math.cos((90 - that.getPos().rot) * toRadians),
+        rot: that.getPos().rot
+      });
+      sleep.msleep(this.params.time_unit * 1000);
+    }
+  }
 }
-module.exports = Car;
+module.exports = wrap(Car);

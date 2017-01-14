@@ -7,8 +7,11 @@ var server = app.listen(config.webport);
 var io = require('socket.io')(server);
 var Car = require(__dirname + "/car.js");
 
+var toRadians = Math.PI / 180;
+
 var car = new Car({
 	initial_pos: config.initial_pos,
+	time_unit: config.time_unit
 });
 
 app.use(express.static(__dirname + '/static'));
@@ -20,20 +23,13 @@ io.on('connection', function (socket) {
 
 	socket.on('mvrect', function(params){
 		console.log(params);
-		var nx = car.getPos().x;
-		var ny = car.getPos().y;
-		var nr = car.getPos().rot;
-		var newpos = {
-			x: nx,
-			y: ny,
-			rot: nr
-		}
-		car.setPos(newpos)
+		car.makeRect(params.distance, params.velocity);
 	});
 });
 
 car.on("positionChange", function(){
 	io.emit("position", car.getPos());
+	console.log(car.getPos());
 })
 
 console.log("Loading sensors...")

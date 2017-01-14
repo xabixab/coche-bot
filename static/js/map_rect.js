@@ -21,7 +21,7 @@ function initRect(){
 function rectUpdate(){
   draw();
   rectOperation.params.distance = parseInt($("#rect-distance").val());
-  rectOperation.params.velocity = parseInt($("#rect-velocity").val());
+  rectOperation.params.velocity = parseInt($("#rect-vel").val());
   rectOperation.params.time = rectOperation.params.distance / rectOperation.params.velocity;
   rectOperation.params.canvasDistance = rectOperation.params.distance * mmToCanvasCoords;
   ctx.beginPath();

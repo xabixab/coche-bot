@@ -9,5 +9,6 @@
     "wseparation":300
   },
   "webport":9000,
-  "pure_mode": true
+  "pure_mode": true,
+  "time_unit": 0.2
 }
