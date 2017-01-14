@@ -28,9 +28,13 @@ io.on('connection', function (socket) {
 });
 
 car.on("positionChange", function(){
+
+})
+
+car.on("positionChangeRounded", function(){
 	io.emit("position", car.getPos());
 	console.log(car.getPos());
-})
+});
 
 console.log("Loading sensors...")
 var Sentsoreak = require(__dirname + '/sentsoreak');
