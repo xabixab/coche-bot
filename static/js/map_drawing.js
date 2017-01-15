@@ -69,11 +69,13 @@ function drawGrid(scale){
 	}
 }
 
+var carMouth;
+
 function drawCar(x, y, rot){
-	var carDimensions = [350, 300];
 	var cnvDim = {
 		x: config.car_dimensions.width * mmToCanvasCoords,
-		y: config.car_dimensions.height * mmToCanvasCoords
+		y: config.car_dimensions.height * mmToCanvasCoords,
+		wheels: config.car_dimensions.wheels * mmToCanvasCoords
 	}
 	x = origin.x + x * mmToCanvasCoords;
 	y = origin.y + y * mmToCanvasCoords;
@@ -95,9 +97,10 @@ function drawCar(x, y, rot){
 	ctx.moveTo(x, y);
 	carMouth = {};
 
-	var carMouth = {
-		x:cnvDim.x/2 * Math.cos(pos.rot * Math.PI/180) + canvasCarPos.x,
-		y:cnvDim.x/2 * Math.sin(pos.rot * Math.PI/180) + canvasCarPos.y
+	// Car mouth is the center point of the front wheels.
+	carMouth = {
+		x:cnvDim.wheels * Math.cos(pos.rot * Math.PI/180) + canvasCarPos.x,
+		y:cnvDim.wheels * Math.sin(pos.rot * Math.PI/180) + canvasCarPos.y
 	}
 
 	ctx.lineTo(carMouth.x, carMouth.y);

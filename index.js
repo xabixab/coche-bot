@@ -35,6 +35,11 @@ io.on('connection', function (socket) {
 		console.log(params);
 		car.makeRect(params.distance, params.velocity);
 	});
+
+	socket.on('rotate', function(params){
+		console.log(params);
+		car.rotate(params.angel, params.velocity);
+	});
 });
 
 car.on("positionChange", function(){

@@ -67,5 +67,9 @@ class Car extends EventEmitter {
       }
     }, intervalTime * 1000); // *1000 to pass to mseconds
   }
+
+  rotate(angle, vel){
+    
+  }
 }
 module.exports = Car;

@@ -13,6 +13,7 @@ $(function(){
 
 var cSocekt;
 function init(){
+	$("#tools-operation").hide();
 	canvas = $("#canvas");
 	c = document.getElementById("canvas");
 	ctx = c.getContext("2d");
@@ -97,7 +98,7 @@ function endOperation(type){
 	$("#tools-operation").hide();
 	operations[type] = false;
 	operations.inProgress = false;
-	disableMakeOperation();
+	disableMakeBtn();
 	$("#tools-operation").hide();
 }
 
@@ -106,7 +107,7 @@ function makeTrigger(){
 		rectMake();
 	} else if (operations.arc === true){
 		makeArc();
-	} else if (typeof(operation.rect) == "object"){
+	} else if (typeof(operations.rect) == "object"){
 
 	}
 }
