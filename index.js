@@ -1,6 +1,6 @@
 var fs = require("fs");
 var config =  JSON.parse(fs.readFileSync(__dirname + "/config.json"));
-var observed = require('observed')
+var sleep = require('sleep');
 var express = require('express');
 var app = express();
 var server = app.listen(config.webport);
@@ -11,7 +11,9 @@ var toRadians = Math.PI / 180;
 
 var car = new Car({
 	initial_pos: config.initial_pos,
-	time_unit: config.time_unit
+	time_unit: config.time_unit,
+	step_lenght: config.step_lenght,
+	send_min_interval: config.send_min_interval
 });
 
 app.use(express.static(__dirname + '/static'));
@@ -31,9 +33,15 @@ car.on("positionChange", function(){
 
 })
 
-car.on("positionChangeRounded", function(){
-	io.emit("position", car.getPos());
-	console.log(car.getPos());
+car.on("positionChangeInt", function(){
+	var carPos = car.getPos();
+	var carPosRounded = {
+		x: Math.round(carPos.x),
+		y: Math.round(carPos.y),
+		rot: Math.round(carPos.rot)
+	}
+	io.emit("position", carPosRounded);
+	console.log(carPosRounded);
 });
 
 console.log("Loading sensors...")

@@ -10,5 +10,7 @@
   },
   "webport":9000,
   "pure_mode": true,
-  "time_unit": 0.1
+  "time_unit": 0.1,
+  "step_lenght": 10,
+  "send_min_interval": 0.1
 }
