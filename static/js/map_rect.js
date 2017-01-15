@@ -1,8 +1,6 @@
 $(function(){
   $("#control-rect").click(initRect);
   $("#tools-rect").hide();
-  $("#control-abort").click(rectAbort);
-  $("#control-make").click(rectMake);
   $("#info-rect").hide();
   $("#rect-distance").change(rectUpdate);
 });
@@ -59,7 +57,7 @@ function rectMake(){
     distance: rectOperation.params.distance,
     velocity: rectOperation.params.velocity
   }
-  socket.emit("mvrect", finalParams);
+  cSocket.send("mvrect", finalParams);
   console.log("mvrect sended with params:"+JSON.stringify(finalParams));
   rectOperation = null;
   endOperation("rect");

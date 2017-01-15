@@ -8,7 +8,12 @@
     "wradius":50,
     "wseparation":300
   },
+  "car_dimensions":{
+    "width": 350,
+    "height": 300
+  },
   "webport":9000,
+  "host":"127.0.0.1",
   "pure_mode": true,
   "step_lenght": 1,
   "send_min_interval": 0.1

@@ -34,13 +34,15 @@
           </div>
           <div class="col-md-4">
             <div id="tools">
-              <a href="#" class="btn btn-default" id="control-rect">Hacer recta</a> |
-              <a href="#" class="btn btn-default" id="control-arc">Hacer arco</a>
+              <a href="#" class="btn btn-default" id="control-rect">Make Rect</a> |
+              <a href="#" class="btn btn-default" id="control-arc">Make Arc</a> |
+              <a href="#" class="btn btn-default" id="control-rotate"> Rotate </a>
             </div>
             <div id="tools-operation">
               <a href="#" class="btn btn-danger"  id="control-abort">Cancel</a> |
               <a href="#" class="btn btn-success" id="control-make" disabled="disabled">Make</a> <br /> <br/>
             </div>
+            <!-- Start Tools for rect operation! -->
             <div id="tools-rect" align="left">
               <h3>Make Rect</h3>
               <hr />
@@ -76,6 +78,26 @@
                 </p>
               </p>
             </div>
+            <!-- End of tools for rect operation -->
+
+            <!-- Start Tools for rotate operation! -->
+            <div id="tools-rotate" align="left">
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Angle</div>
+                  <input type="text" class="form-control" id="rotate-angle" value="-45"/>
+                  <div class="input-group-addon">º</div>
+                </div>
+              </p>
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Velocity</div>
+                  <input type="text" class="form-control" id="rotate-vel" value="30"/>
+                  <div class="input-group-addon">º/s</div>
+                </div>
+              </p>
+            </div>
+            <!-- End tools for rotate operation -->
           </div>
         </div>
 
@@ -90,5 +112,6 @@
 <script type="text/javascript" src="js/map_drawing.js"></script>
 <script type="text/javascript" src="js/map_rect.js"></script>
 <script type="text/javascript" src="js/map_arc.js"></script>
+<script type="text/javascript" src="js/map_rotate.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
 </html>

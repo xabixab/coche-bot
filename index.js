@@ -18,6 +18,15 @@ var car = new Car({
 app.use(express.static(__dirname + '/static'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
+app.get('/getConfig', function (req, res) {
+	var clientConfig = {
+		"car_weights":config.car_weights,
+		"car_dimensions": config.car_dimensions,
+		"host": config.host
+	}
+  res.json(clientConfig);
+})
+
 io.on('connection', function (socket) {
 	console.log("connection!");
 	socket.emit('position', car.position);

@@ -1,6 +1,18 @@
 var origin = {x:0.0, y:0.0};
-var operations = {}
+var operations = {};
+var config;
+
 $(function(){
+	$("body").hide();
+	$.get("/getConfig", function(data){
+		config = data;
+		$("body").show();
+		init();
+	})
+});
+
+var cSocekt;
+function init(){
 	canvas = $("#canvas");
 	c = document.getElementById("canvas");
 	ctx = c.getContext("2d");
@@ -10,8 +22,16 @@ $(function(){
 	cy = h/2;
 	ctx.translate(cx, cy);
 
+	cSocket = new CarSocket({
+		host: "http://127.0.0.1:9000"
+	});
+
+	$("#control-abort").click(abortTrigger);
+	$("#control-make").click(makeTrigger);
+
 	scaleSlider = $("#ex1").slider({})
 	scaleSlider.on('slide', draw);
+	draw();
 
 	canvas.click(triggerClick);
 	$("#control_view").click(centerView);
@@ -23,8 +43,7 @@ $(function(){
 		var mouseInUnits = fromCanvasToUnits(mouse.x, mouse.y);
 		$("#info_mouse").html("X:" + round(mouseInUnits.x.toString(),0) + "mm Y:" + round(mouseInUnits.y.toString(),0) + "mm");
 	});
-
-});
+}
 
 function triggerClick(){
 	if(operations.inProgress === true){
@@ -75,7 +94,7 @@ function beginOperation(type){
 function endOperation(type){
 	$("#tools-"+type).hide();
 	$("#tools").show();
-	$("#tools-operation");
+	$("#tools-operation").hide();
 	operations[type] = false;
 	operations.inProgress = false;
 	disableMakeOperation();
@@ -84,15 +103,17 @@ function endOperation(type){
 
 function makeTrigger(){
 	if(operations.rect === true){
-		makeRect();
+		rectMake();
 	} else if (operations.arc === true){
 		makeArc();
+	} else if (typeof(operation.rect) == "object"){
+
 	}
 }
 
 function abortTrigger(){
 	if(operations.rect === true){
-		abortRect();
+		rectAbort();
 	} else if(operations.arc === true){
 		abortArc();
 	}

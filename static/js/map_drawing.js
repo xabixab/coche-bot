@@ -72,8 +72,8 @@ function drawGrid(scale){
 function drawCar(x, y, rot){
 	var carDimensions = [350, 300];
 	var cnvDim = {
-		x: carDimensions[0] * mmToCanvasCoords,
-		y: carDimensions[1] * mmToCanvasCoords
+		x: config.car_dimensions.width * mmToCanvasCoords,
+		y: config.car_dimensions.height * mmToCanvasCoords
 	}
 	x = origin.x + x * mmToCanvasCoords;
 	y = origin.y + y * mmToCanvasCoords;
