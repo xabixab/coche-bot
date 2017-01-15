@@ -11,7 +11,6 @@ var toRadians = Math.PI / 180;
 
 var car = new Car({
 	initial_pos: config.initial_pos,
-	time_unit: config.time_unit,
 	step_lenght: config.step_lenght,
 	send_min_interval: config.send_min_interval
 });

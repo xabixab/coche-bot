@@ -29,8 +29,6 @@ class Car extends EventEmitter {
         if(self.lastPositionChangeInt <= now - self.params.send_min_interval*1000){
           self.lastPositionChangeInt = new Date().getTime();
           self.emit("positionChangeInt");
-        } else {
-          console.log(now - self.params.send_min_interval*1000 + " " + self.lastPositionChangeInt);
         }
       }
 
@@ -68,7 +66,6 @@ class Car extends EventEmitter {
         clearInterval(step);
       }
     }, intervalTime * 1000); // *1000 to pass to mseconds
-
   }
 }
 module.exports = Car;
