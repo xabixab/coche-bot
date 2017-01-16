@@ -3,7 +3,7 @@ var pos;
 class CarSocket {
 	constructor(params){
 		self = this;
-		self.socket = io(params.host);
+		self.socket = io(params.websockets_host);
 		self.socket.on('connect', function(){
 			console.log("Connected!");
 		});

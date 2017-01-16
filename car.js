@@ -69,7 +69,13 @@ class Car extends EventEmitter {
   }
 
   rotate(angle, vel){
-    
+	self = this;
+	var carPos = self.getPosition();
+	
+	var intervalTime = 100;
+	var step = setInterval(function(){
+	
+	}, intervalTime);
   }
-}
+}	
 module.exports = Car;

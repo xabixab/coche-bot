@@ -38,7 +38,7 @@ function rectUpdate(){
   var realFinalPoint = fromCanvasToUnits(finalPoint.x, finalPoint.y);
   $("#rect-finalx").val(round(finalPoint.x * (Math.pow(mmToCanvasCoords, -1)), 0) + "mm");
   $("#rect-finaly").val(round(finalPoint.y * (Math.pow(mmToCanvasCoords, -1)), 0) + "mm");
-
+  $("#rect-time").val(rectOperation.params.time * 1000);
   console.log(finalPoint);
   ctx.lineTo(finalPoint.x, finalPoint.y);
   ctx.strokeStyle = "#FF0";
