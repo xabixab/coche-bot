@@ -2,7 +2,7 @@
   "initial_pos":{
     "x":0,
     "y":0,
-    "rot":45
+    "rot":90
   },
   "car_weights":{
     "wradius":50,
@@ -17,5 +17,6 @@
   "host":"http://10.17.29.32:9000/",
   "pure_mode": true,
   "step_lenght": 1,
-  "send_min_interval": 0.1
+  "send_min_interval": 0.1,
+  "rotate_interval": 1
 }

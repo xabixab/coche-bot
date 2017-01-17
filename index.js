@@ -12,7 +12,9 @@ var toRadians = Math.PI / 180;
 var car = new Car({
 	initial_pos: config.initial_pos,
 	step_lenght: config.step_lenght,
-	send_min_interval: config.send_min_interval
+	send_min_interval: config.send_min_interval,
+	rotate_interval: config.rotate_interval,
+	car_dimensions: config.car_dimensions
 });
 
 app.use(express.static(__dirname + '/static'));
@@ -38,7 +40,7 @@ io.on('connection', function (socket) {
 
 	socket.on('rotate', function(params){
 		console.log(params);
-		car.rotate(params.angel, params.velocity);
+		car.rotate(params.angle, params.velocity);
 	});
 });
 

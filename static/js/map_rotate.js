@@ -49,7 +49,7 @@ class Rotate {
     console.log("make");
     var params = {
       "angle": parseInt($("#rotate-angle").val()) % 360,
-      "velocity": parseInt($("#rotate-vel"))
+      "velocity": parseInt($("#rotate-vel").val())
     }
     cSocket.send("rotate", params);
     endOperation("rotate");

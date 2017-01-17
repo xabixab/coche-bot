@@ -69,12 +69,30 @@ class Car extends EventEmitter {
   }
 
   rotate(angle, vel){
-	self = this;
-	var carPos = self.getPosition();
+	var self = this;
+	angle = angle % 360;
+	if(angle % self.params.rotate_interval !== 0){
+		console.log("Warning! not exact angel!");
+	}
+	var carPos = self.getPos();
 	
-	var intervalTime = 100;
+	var intervalTime = 1 / vel; // vel in º/s, passed to period.
+	var fragments = Math.trunc(angle / self.params.rotate_interval);
+	var remainingFragments = fragments;
+	
 	var step = setInterval(function(){
-	
+		var carPos = self.getPos();
+		var radius = self.params.car_dimensions.wheels;
+		var newPos = {
+			x: carPos.x + radius  - radius * Math.cos((carPos.rot + self.params.rotate_interval)*Math.PI/180),
+			y: carPos.y + Math.sin((carPos.rot + self.params.rotate_interval)*Math.PI/180),
+			rot: carPos.rot + self.params.rotate_interval,
+		}
+		self.setPos(newPos);
+		remainingFragments--;
+		if(remainingFragments === 0){
+			clearInterval(step);
+		}
 	}, intervalTime);
   }
 }	
