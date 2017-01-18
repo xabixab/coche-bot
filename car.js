@@ -39,7 +39,28 @@ class Car extends EventEmitter {
       return false;
     }
   }
+  
+  getWheelCenter(){
+	self = this;
+	wheels = self.params.car_dimensions.wheels;
+	return {
+		x:Math.cos(self.getPos().rot * Math.PI/180) * wheels + self.getPos().x,
+		y:Math.sin(self.getPos().rot * Math.PI/180) * wheels + self.getPos().y
+	}
 
+  }
+  
+  
+  getPositionFromWheels(wpos, rot){
+	self = this;
+	wheels = self.params.car_dimensions.wheels;
+	return {
+		x:Math.cos(rot * Math.PI/180) * wheels + wpos.x,
+		y:Math.sin(rot * Math.PI/180) * wheels + wpos.y
+	}
+
+  }
+  
   makeRect(distance, vel){
     var self = this;
     vel = Math.abs(vel); // Posible bug fixed.
@@ -76,7 +97,7 @@ class Car extends EventEmitter {
 	}
 	var carPos = self.getPos();
 	
-	var intervalTime = 1 / vel; // vel in º/s, passed to period.
+	var intervalTime = 1000 / vel; // vel in º/s, passed to period.
 	var fragments = Math.trunc(angle / self.params.rotate_interval);
 	var remainingFragments = fragments;
 	
@@ -84,8 +105,8 @@ class Car extends EventEmitter {
 		var carPos = self.getPos();
 		var radius = self.params.car_dimensions.wheels;
 		var newPos = {
-			x: carPos.x + radius  - radius * Math.cos((carPos.rot + self.params.rotate_interval)*Math.PI/180),
-			y: carPos.y + Math.sin((carPos.rot + self.params.rotate_interval)*Math.PI/180),
+			x: carPos.x + radius - radius * Math.cos((carPos.rot + self.params.rotate_interval)*Math.PI/180),
+			y: carPos.y + radius * Math.sin((carPos.rot + self.params.rotate_interval)*Math.PI/180),
 			rot: carPos.rot + self.params.rotate_interval,
 		}
 		self.setPos(newPos);
