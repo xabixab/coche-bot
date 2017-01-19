@@ -56,7 +56,10 @@ car.on("positionChangeInt", function(){
 		rot: Math.round(carPos.rot)
 	}
 	io.emit("position", carPosRounded);
-	console.log(carPosRounded);
+	//console.log(carPosRounded);
+	console.log(car.getPos());
+	console.log(car.getPositionFromWheels(car.getPos().rot));
+	console.log("---");
 });
 
 console.log("Loading sensors...")
@@ -74,3 +77,6 @@ sens.on('sens:change',function(data){
 app.get('/sens',function(req,res){
 	res.json({sens1:sens1,sens2:sens2});
 });
+console.log(car.getPos());
+console.log(car.getPositionFromWheels(car.getPos().rot));
+console.log("---");

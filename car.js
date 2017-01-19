@@ -40,6 +40,49 @@ class Car extends EventEmitter {
     }
   }
 
+  getWheelCenter(){
+  	var self = this;
+  	var wheels = self.params.car_dimensions.wheels;
+  	return {
+  		x:Math.cos(self.getPos().rot * Math.PI/180) * wheels + self.getPos().x,
+  		y:Math.sin(self.getPos().rot * Math.PI/180) * wheels + self.getPos().y
+  	}
+
+  }
+
+  getPositionFromWheels(rot){
+  	var self = this;
+    var wpos = self.getWheelCenter();
+  	var wheels = self.params.car_dimensions.wheels;
+
+    return {
+  	   x:wpos.x - Math.cos(rot * Math.PI/180) * wheels,
+       y:wpos.y - Math.sin((rot) * Math.PI/180) * wheels
+	  }
+  }
+
+  getPositionFromArc(wpos, rot, radius){
+  	var self = this;
+
+    return {
+  	   x:wpos.x - Math.cos(rot * Math.PI/180) * radius,
+       y:wpos.y - Math.sin((rot) * Math.PI/180) * radius
+	  }
+
+  }
+
+  relativeAngle(angle){
+    angle = (360 + angle) % 360;
+    if(angle > 180){
+      angle = angle * -1;
+    }
+    return angle;
+  }
+
+  absoluteAngle(angle){
+    return (360 + angle) % 360;
+  }
+
   makeRect(distance, vel){
     var self = this;
     vel = Math.abs(vel); // Posible bug fixed.
@@ -70,29 +113,37 @@ class Car extends EventEmitter {
 
   rotate(angle, vel){
   	var self = this;
-  	angle = angle % 360;
+    angle = self.relativeAngle(angle);
   	if(angle % self.params.rotate_interval !== 0){
-  		console.log("Warning! not exact angel! " + self.params.rotate_interval);
+  		console.log("Warning! not exact angel!");
   	}
-  	var carPos = self.getPos();
+
+    var rotationCenter = self.getWheelCenter();
 
   	var intervalTime = 1000 / vel; // vel in º/s, passed to period.
-  	var fragments = Math.round(angle / self.params.rotate_interval);
+  	var fragments = Math.trunc(Math.abs(angle) / self.params.rotate_interval);
   	var remainingFragments = fragments;
 
   	var step = setInterval(function(){
-  		var carPos = self.getPos();
-  		var radius = self.params.car_dimensions.wheels;
-  		self.setPos({
-  			x: carPos.x + radius  - radius * Math.cos((carPos.rot + self.params.rotate_interval)*Math.PI/180),
-  			y: carPos.y + Math.sin((carPos.rot + self.params.rotate_interval)*Math.PI/180),
-  			rot: carPos.rot + self.params.rotate_interval,
-  		});
+      if(angle > 0){
+        var finalRotation = self.relativeAngle(self.getPos().rot) + self.params.rotate_interval;
+      } else {
+        var finalRotation = self.relativeAngle(self.getPos().rot) - self.params.rotate_interval;
+      }
+      var radius = self.params.car_dimensions.wheels;
+      var newPos = self.getPositionFromWheels(finalRotation);
+
+      self.setPos({
+        x: newPos.x,
+        y: newPos.y,
+        rot: finalRotation
+      });
+
   		remainingFragments--;
   		if(remainingFragments === 0){
   			clearInterval(step);
   		}
-    }, intervalTime);
+  	}, intervalTime);
   }
 }
 module.exports = Car;
