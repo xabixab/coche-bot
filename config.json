@@ -2,7 +2,7 @@
   "initial_pos":{
     "x":100,
     "y":100,
-    "rot":315
+    "rot":45
   },
   "car_weights":{
     "wradius":50,

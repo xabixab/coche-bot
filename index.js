@@ -48,7 +48,7 @@ car.on("positionChange", function(){
 
 })
 
-car.on("positionChangeInt", function(){
+car.on("sendPosition", function(){
 	var carPos = car.getPos();
 	var carPosRounded = {
 		x: Math.round(carPos.x),
@@ -56,10 +56,7 @@ car.on("positionChangeInt", function(){
 		rot: Math.round(carPos.rot)
 	}
 	io.emit("position", carPosRounded);
-	//console.log(carPosRounded);
 	console.log(car.getPos());
-	console.log(car.getPositionFromWheels(car.getPos().rot));
-	console.log("---");
 });
 
 console.log("Loading sensors...")

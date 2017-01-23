@@ -21,19 +21,19 @@ class Car extends EventEmitter {
     return this.position;
   };
 
-  setPos(pos) {
+  setPos(pos, force_send) {
     var self = this;
+    force_send = typeof force_send !== 'undefined' ? force_send : false;
     if(self.position !== pos){
-      if(Math.round(self.position.x) != Math.round(pos.x) || Math.round(self.position.y) != Math.round(pos.y) || Math.round(self.position.rot) != Math.round(pos.rot)){
-        var now = new Date().getTime();
-        if(self.lastPositionChangeInt <= now - self.params.send_min_interval*1000){
-          self.lastPositionChangeInt = new Date().getTime();
-          self.emit("positionChangeInt");
-        }
-      }
-
+      //if(Math.round(self.position.x) != Math.round(pos.x) || Math.round(self.position.y) != Math.round(pos.y) || Math.round(self.position.rot) != Math.round(pos.rot)){
+      //}
+	  var now = new Date().getTime();
       self.position = pos;
       self.emit('positionChange');
+      if(self.lastPositionChangeInt <= now - self.params.send_min_interval*1000 || force_send){
+        self.lastPositionChangeInt = new Date().getTime();
+        self.emit("sendPosition");
+      }
       return true;
     } else {
       return false;
@@ -111,33 +111,55 @@ class Car extends EventEmitter {
     }, intervalTime * 1000); // *1000 to pass to mseconds
   }
 
-  rotate(angle, vel){
+  rotate(finalrot, vel){
   	var self = this;
-    angle = self.relativeAngle(angle);
+  	
+  	if(finalrot <= 0){
+		console.log("Error. invalid rotation detected.");
+		return;
+	}
+	
+	if(finalrot == self.getPos().rot){
+		console.log("Final position is current position. No need to rotate");
+		return;
+	}
+	
+	finalrot = finalrot % 360;
+  	
+  	var angle = finalrot - self.getPos().rot;
+  	
   	if(angle % self.params.rotate_interval !== 0){
-  		console.log("Warning! not exact angel!");
+  		console.log("Warning! not exact angle!");
   	}
+  	
+  	var rotationCenter = self.getWheelCenter();
 
-    var rotationCenter = self.getWheelCenter();
-
-  	var intervalTime = 1000 / vel; // vel in º/s, passed to period.
+  	var intervalTime = 1000 / vel; // vel in º/s, passed to period in mSeconds (ms).
   	var fragments = Math.trunc(Math.abs(angle) / self.params.rotate_interval);
+  	console.log(fragments);
   	var remainingFragments = fragments;
 
   	var step = setInterval(function(){
       if(angle > 0){
-        var finalRotation = self.relativeAngle(self.getPos().rot) + self.params.rotate_interval;
+		var finalRotation = self.getPos().rot + self.params.rotate_interval;
       } else {
-        var finalRotation = self.relativeAngle(self.getPos().rot) - self.params.rotate_interval;
+		var finalRotation = self.getPos().rot - self.params.rotate_interval;
       }
       var radius = self.params.car_dimensions.wheels;
       var newPos = self.getPositionFromWheels(finalRotation);
-
+	  
+	  var forceSend;
+	  if(remainingFragments == 1){
+		forceSend = true;
+		console.log("force_send true");
+	  } else {
+		forceSend = false;
+	  }
       self.setPos({
         x: newPos.x,
         y: newPos.y,
         rot: finalRotation
-      });
+      }, forceSend);
 
   		remainingFragments--;
   		if(remainingFragments === 0){
