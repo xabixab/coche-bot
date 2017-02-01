@@ -113,25 +113,25 @@ class Car extends EventEmitter {
 
   rotate(finalrot, vel){
   	var self = this;
-  	
-  	if(finalrot <= 0){
+
+  	if(finalrot < 0){
 		console.log("Error. invalid rotation detected.");
 		return;
 	}
-	
+
 	if(finalrot == self.getPos().rot){
 		console.log("Final position is current position. No need to rotate");
 		return;
 	}
-	
+
 	finalrot = finalrot % 360;
-  	
+
   	var angle = finalrot - self.getPos().rot;
-  	
+
   	if(angle % self.params.rotate_interval !== 0){
   		console.log("Warning! not exact angle!");
   	}
-  	
+
   	var rotationCenter = self.getWheelCenter();
 
   	var intervalTime = 1000 / vel; // vel in º/s, passed to period in mSeconds (ms).
@@ -139,22 +139,23 @@ class Car extends EventEmitter {
   	console.log(fragments);
   	var remainingFragments = fragments;
 
-  	var step = setInterval(function(){
+    var step = setInterval(function(){
       if(angle > 0){
-		var finalRotation = self.getPos().rot + self.params.rotate_interval;
+		      var finalRotation = self.getPos().rot + self.params.rotate_interval;
       } else {
-		var finalRotation = self.getPos().rot - self.params.rotate_interval;
+		      var finalRotation = self.getPos().rot - self.params.rotate_interval;
       }
+
       var radius = self.params.car_dimensions.wheels;
       var newPos = self.getPositionFromWheels(finalRotation);
-	  
-	  var forceSend;
-	  if(remainingFragments == 1){
-		forceSend = true;
-		console.log("force_send true");
-	  } else {
-		forceSend = false;
-	  }
+      var forceSend;
+	    if(remainingFragments == 1){
+		    forceSend = true;
+        console.log("force_send true");
+	     } else {
+         forceSend = false;
+       }
+
       self.setPos({
         x: newPos.x,
         y: newPos.y,

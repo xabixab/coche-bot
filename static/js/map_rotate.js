@@ -8,13 +8,25 @@ class Rotate {
 
   update(){
     console.log("update");
-    var angle = parseInt($("#rotate-angle").val()) % 360;
-    $("#rotate-angle").val(angle);
+
+    var inpAngle = parseInt($("#rotate-angle").val()) % 360;
+    $("#rotate-angle").val(inpAngle);
+
+    var vel = Math.abs($("#rotate-vel").val());
+    $("#rotate-vel").val(vel);
+
+    var time = Math.abs(inpAngle / parseInt($("#rotate-vel").val())* 1000);;
+    $("#rotate-time").val(Math.round(time));
+
+    var frot = Math.abs(inpAngle + pos.rot);
+    $("#rotate-frotation").val(frot);
+
+    var angle = inpAngle + pos.rot;
     draw();
 
     var radius = config.car_weights.wseparation * mmToCanvasCoords/2;
     var sa1 = (90 + pos.rot) * Math.PI/180;
-    var ea1 = (90 + pos.rot + angle) * Math.PI/180;
+    var ea1 = (90 + angle) * Math.PI/180;
     var sa2 = sa1 + 180 * Math.PI/180;
     var ea2 = ea1 + 180 * Math.PI/180;
 
@@ -48,7 +60,7 @@ class Rotate {
   make(){
     console.log("make");
     var params = {
-      "angle": parseInt($("#rotate-angle").val()) % 360,
+      "angle": pos.rot + parseInt($("#rotate-angle").val()) % 360,
       "velocity": parseInt($("#rotate-vel").val())
     }
     cSocket.send("rotate", params);
@@ -96,6 +108,12 @@ $(function(){
   });
 
   $("#rotate-vel").change(function () {
+    if (typeof(operations.rotate) != "undefined" && operations.rotate !== false){
+      operations.rotate.update();
+    }
+  });
+
+  $("#rotate-frotation").change(function () {
     if (typeof(operations.rotate) != "undefined" && operations.rotate !== false){
       operations.rotate.update();
     }

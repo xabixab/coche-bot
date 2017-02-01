@@ -3,6 +3,7 @@ $(function(){
   $("#tools-rect").hide();
   $("#info-rect").hide();
   $("#rect-distance").change(rectUpdate);
+  $("#rect-vel").change(rectUpdate);
 });
 
 function initRect(){

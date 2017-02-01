@@ -10,8 +10,8 @@ class CarSocket {
 
 		self.socket.on('position', function (data) {
 			pos = data;
-			$("#info_pos").html(JSON.stringify([pos.x, pos.y]));
-			$("#info_rot").html(JSON.stringify([pos.rot]));
+			$("#info_pos").html(JSON.stringify([Math.round(pos.x), Math.round(pos.y)]));
+			$("#info_rot").html(JSON.stringify([Math.round(pos.rot)]));
 			console.log(data);
 			operationInProgress = false;
 			draw();
