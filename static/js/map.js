@@ -7,6 +7,9 @@ $(function(){
 	$.get("/getConfig", function(data){
 		config = data;
 		$("body").show();
+		config.rangers.forEach(fucntion(){
+			
+		});
 		init();
 	})
 });

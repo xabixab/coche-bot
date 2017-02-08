@@ -1,11 +1,13 @@
 class Ranger {
   constructor(params){
     var self = this;
-    var self.xoffset = params.xoffset;
-    var self.yoffset = params.yoffset;
+    self.xoffset = params.xoffset;
+    self.yoffset = params.yoffset;
+    self.posrot = Math.atan(self.yoffset / self.xoffset);
+    console.log(self.posrot);
   }
 
-  private getCanvasPos(params){
+  getCanvasPos(params){
     var self = this;
     return {
       x:self.xoffset * params.mmToCanvasCoords * Math.cos(pos.rot * Math.PI/180) + canvasCarPos.x,
