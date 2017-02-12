@@ -1,14 +1,14 @@
 class Ranger {
   constructor(params){
-    var that = this;
-    that.xoffset = params.xoffset;
-    that.yoffset = params.yoffset;
-    that.rotoffset = params.rotoffset;
-    that.vangle = params.vangle;
+    var self = this;
+    self.xoffset = params.xoffset;
+    self.yoffset = params.yoffset;
+    self.posrot = Math.atan(self.yoffset / self.xoffset);
+    console.log(self.posrot);
   }
 
-  getCanvasPos(){
-    var that = this;
+  getCanvasPos(params){
+    var self = this;
     return {
       x:that.yoffset * mmToCanvasCoords * Math.cos((- pos.rot) * Math.PI/180) + canvasCarPos.x,
 		  y:that.xoffset * mmToCanvasCoords * Math.sin((- pos.rot) * Math.PI/180) + canvasCarPos.y
