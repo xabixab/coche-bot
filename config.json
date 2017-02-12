@@ -13,6 +13,14 @@
     "height": 300,
     "wheels": 130
   },
+  "rangers":{
+    "0":{
+      "xoffset":0,
+      "yoffset":0,
+      "rotoffset":0,
+      "vangle":160
+    }
+  },
   "webport":9000,
   "host":"http://10.17.29.138:9000/",
   "pure_mode": true,

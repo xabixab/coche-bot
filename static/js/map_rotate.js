@@ -1,9 +1,9 @@
 class Rotate {
   constructor(params){
-    self = this;
+    var that = this;
     enableMakeBtn();
     beginOperation("rotate");
-    self.update();
+    that.update();
   }
 
   update(){

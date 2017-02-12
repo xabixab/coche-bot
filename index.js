@@ -24,7 +24,8 @@ app.get('/getConfig', function (req, res) {
 	var clientConfig = {
 		"car_weights":config.car_weights,
 		"car_dimensions": config.car_dimensions,
-		"websockets_host": config.host
+		"websockets_host": config.host,
+		"rangers": config.rangers
 	}
   res.json(clientConfig);
 })

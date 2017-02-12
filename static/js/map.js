@@ -1,5 +1,6 @@
 var origin = {x:0.0, y:0.0};
 var operations = {};
+var rangers = {};
 var config;
 
 $(function(){
@@ -7,6 +8,9 @@ $(function(){
 	$.get("/getConfig", function(data){
 		config = data;
 		$("body").show();
+		for (var key in config.rangers) {
+			rangers[key] = new Ranger(config.rangers[key]);
+		}
 		init();
 	})
 });
