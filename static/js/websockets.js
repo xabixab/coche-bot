@@ -14,7 +14,9 @@ class CarSocket {
 			$("#info_rot").html(JSON.stringify([Math.round(pos.rot)]));
 			console.log(data);
 			operationInProgress = false;
-			draw();
+			if(typeof draw == "function"){
+				draw();
+			}
 		});
 
 		self.socket.on('disconnect', function(){

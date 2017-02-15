@@ -2,26 +2,38 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Blockly Demo: Toolbox</title>
+  <title>Manage with Blocks</title>
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="/bower_components/google-blockly/blockly_compressed.js"></script>
   <script src="/bower_components/google-blockly/blocks_compressed.js"></script>
+  <script src="/bower_components/google-blockly/javascript_compressed.js"></script>
   <script src="/bower_components/google-blockly/msg/js/es.js"></script>
-  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/bower_components/prism/prism.js"></script>
+  <script src="js/blocks.js"> </script>
+  <script src="js/websockets.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/blocks.css">
+  <link rel="stylesheet" href="/bower_components/prism/themes/prism-okaidia.css">
 </head>
 <body>
-  <div id="blocklyDiv" style="height: 90vh; width: 50vw;"></div>
+  <div align="center" id="container">
+    <a href="#" class="btn btn-success" id="btn-run">RUN!</a>
+    <br/>
 
+    <div align ="left" id="blocklyDiv" style="height: 65vh; width: 90vw;"></div>
+    <hr />
+
+    <div align="left" id="codeDiv" style="height:25vh; width: 90vw">
+      <pre><code class="language-javascript" id="codeField">if(true){
+  log();
+}
+      </code></pre>
+    </div>
+  </div>
 
   <script>
-    $(function(){
-      $.get("toolbox.xml", function(data){
-        var workspace = Blockly.inject('blocklyDiv', {
-              media: '/bower_components/google-blockly/media/',
-              toolbox: new XMLSerializer().serializeToString(data)
-        });
 
-      })
-    });
   </script>
 
 </body>

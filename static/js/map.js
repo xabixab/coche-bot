@@ -1,15 +1,16 @@
 var origin = {x:0.0, y:0.0};
 var operations = {};
 var config;
+var pos = {};
 
 $(function(){
 	$("body").hide();
 	$.get("/getConfig", function(data){
 		config = data;
 		$("body").show();
-		config.rangers.forEach(fucntion(){
-			
-		});
+		/*config.rangers.forEach(fucntion(){
+
+		});*/
 		init();
 	})
 });
