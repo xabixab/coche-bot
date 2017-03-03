@@ -8,9 +8,9 @@ $(function(){
 	$.get("/getConfig", function(data){
 		config = data;
 		$("body").show();
-		for (var key in config.rangers) {
+		/*for (var key in config.rangers) {
 			rangers[key] = new Ranger(config.rangers[key]);
-		}
+		}*/
 		init();
 	})
 });

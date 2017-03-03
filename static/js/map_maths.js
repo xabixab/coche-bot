@@ -27,7 +27,7 @@ function getSlope(alfa){
   return slope;
 }
 
-function getDistanceBetweenPoints(p1, p2, abs){
+function getDistanceBetweenPoints(p1, p2){
   /*
       Gets the distance of 2 points using pitagoras.
   */

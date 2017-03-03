@@ -35,8 +35,10 @@
           <div class="col-md-4">
             <div id="tools">
               <a href="#" class="btn btn-default" id="control-rect">Make Rect</a> |
-              <a href="#" class="btn btn-default" id="control-arc">Make Arc</a> |
-              <a href="#" class="btn btn-default" id="control-rotate"> Rotate </a>
+              <a href="#" class="btn btn-default" id="control-arc">Make Arc</a>
+              <br /> <br/>
+              <a href="#" class="btn btn-default" id="control-rotate"> Rotate </a> |
+              <a href="#" class="btn btn-default" id="control-moveto"> Move To </a>
             </div>
             <div id="tools-operation">
               <a href="#" class="btn btn-danger"  id="control-abort">Cancel</a> |
@@ -112,6 +114,40 @@
               </p>
             </div>
             <!-- End tools for rotate operation -->
+            <!-- Start Tools for MoveTo operation! -->
+            <div id="tools-moveto" align="left">
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">End Position:</div>
+                  <input type="text" class="form-control" id="moveto-xpos" value="200"/>
+                  <div class="input-group-addon">Xmm</div>
+                  <input type="text" class="form-control" id="moveto-ypos" value="200"/>
+                  <div class="input-group-addon">Ymm</div>
+                </div>
+              </p>
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Rect velocity</div>
+                  <input type="text" class="form-control" id="moveto-rectvel" value="30"/>
+                  <div class="input-group-addon">mm/s</div>
+                </div>
+              </p>
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Rotation velocity:</div>
+                  <input type="text" class="form-control" id="moveto-rotvel" value="30"/>
+                  <div class="input-group-addon">º/s</div>
+                </div>
+              </p>
+              <p>
+                <div class="input-group">
+                  <div class="input-group-addon">Time:</div>
+                  <input type="text" class="form-control" id="moveto-time" value="30"/>
+                  <div class="input-group-addon">ms</div>
+                </div>
+              </p>
+            </div>
+            <!-- end tools for MoveTo operation -->
           </div>
         </div>
 
@@ -127,5 +163,6 @@
 <script type="text/javascript" src="js/map_rect.js"></script>
 <script type="text/javascript" src="js/map_arc.js"></script>
 <script type="text/javascript" src="js/map_rotate.js"></script>
+<script type="text/javascript" src="js/map_moveto.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
 </html>
